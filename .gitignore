@@ -4,3 +4,5 @@ DataViz/obj
 packages/
 Visualizer/obj/
 Visualizer/bin
+DataStore/bin
+DataStore/obj/

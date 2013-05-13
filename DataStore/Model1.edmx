@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TweetDataModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="TweetDataModelStoreContainer">
+          <EntitySet Name="Media" EntityType="TweetDataModel.Store.Media" store:Type="Tables" />
+          <EntitySet Name="Tweet" EntityType="TweetDataModel.Store.Tweet" store:Type="Tables" />
+          <EntitySet Name="Website" EntityType="TweetDataModel.Store.Website" store:Type="Tables" />
+          <AssociationSet Name="LinkSite" Association="TweetDataModel.Store.LinkSite">
+            <End Role="Website" EntitySet="Website" />
+            <End Role="Tweet" EntitySet="Tweet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Media">
+          <Key>
+            <PropertyRef Name="Url" />
+          </Key>
+          <Property Name="Url" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Type" Type="nvarchar" MaxLength="100" />
+          <Property Name="SourceSite" Type="nvarchar" Nullable="false" MaxLength="300" />
+          <Property Name="ImageArea" Type="int" />
+        </EntityType>
+        <EntityType Name="Tweet">
+          <Key>
+            <PropertyRef Name="TweetID" />
+          </Key>
+          <Property Name="Text" Type="nvarchar" MaxLength="200" />
+          <Property Name="TweetID" Type="nvarchar" Nullable="false" MaxLength="24" />
+          <Property Name="LinkSite" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Website">
+          <Key>
+            <PropertyRef Name="Url" />
+          </Key>
+          <Property Name="Title" Type="nvarchar" MaxLength="300" />
+          <Property Name="Url" Type="nvarchar" Nullable="false" MaxLength="300" />
+        </EntityType>
+        <Association Name="LinkSite">
+          <End Role="Website" Type="TweetDataModel.Store.Website" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tweet" Type="TweetDataModel.Store.Tweet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Website">
+              <PropertyRef Name="Url" />
+            </Principal>
+            <Dependent Role="Tweet">
+              <PropertyRef Name="LinkSite" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TweetDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="TweetDataEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Websites" EntityType="TweetDataModel.Website" />
+          <EntitySet Name="Tweets" EntityType="TweetDataModel.Tweet" />
+          <AssociationSet Name="LinkSite" Association="TweetDataModel.LinkSite">
+            <End Role="Website" EntitySet="Websites" />
+            <End Role="Tweet" EntitySet="Tweets" />
+          </AssociationSet>
+          <EntitySet Name="Media" EntityType="TweetDataModel.Medium" />
+        </EntityContainer>
+        <EntityType Name="Website">
+          <Key>
+            <PropertyRef Name="Url" />
+          </Key>
+          <Property Type="String" Name="Title" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tweets" Relationship="TweetDataModel.LinkSite" FromRole="Website" ToRole="Tweet" />
+        </EntityType>
+        <EntityType Name="Tweet">
+          <Key>
+            <PropertyRef Name="TweetID" />
+          </Key>
+          <Property Type="String" Name="Text" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="TweetID" Nullable="false" MaxLength="24" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LinkSite" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Website" Relationship="TweetDataModel.LinkSite" FromRole="Tweet" ToRole="Website" />
+        </EntityType>
+        <Association Name="LinkSite">
+          <End Type="TweetDataModel.Website" Role="Website" Multiplicity="0..1" />
+          <End Type="TweetDataModel.Tweet" Role="Tweet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Website">
+              <PropertyRef Name="Url" />
+            </Principal>
+            <Dependent Role="Tweet">
+              <PropertyRef Name="LinkSite" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Medium">
+          <Key>
+            <PropertyRef Name="Url" />
+          </Key>
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Type" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SourceSite" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ImageArea" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TweetDataModelStoreContainer" CdmEntityContainer="TweetDataEntities" >
+          <EntitySetMapping Name="Websites">
+            <EntityTypeMapping TypeName="TweetDataModel.Website">
+              <MappingFragment StoreEntitySet="Website">
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tweets">
+            <EntityTypeMapping TypeName="TweetDataModel.Tweet">
+              <MappingFragment StoreEntitySet="Tweet">
+                <ScalarProperty Name="LinkSite" ColumnName="LinkSite" />
+                <ScalarProperty Name="TweetID" ColumnName="TweetID" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Media">
+            <EntityTypeMapping TypeName="TweetDataModel.Medium">
+              <MappingFragment StoreEntitySet="Media">
+                <ScalarProperty Name="ImageArea" ColumnName="ImageArea" />
+                <ScalarProperty Name="SourceSite" ColumnName="SourceSite" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1" >
+        <EntityTypeShape EntityType="TweetDataModel.Website" Width="1.5" PointX="0.75" PointY="3.75" Height="1.4033821614583322" />
+        <EntityTypeShape EntityType="TweetDataModel.Tweet" Width="1.5" PointX="3" PointY="3.75" Height="1.7879850260416674" />
+        <AssociationConnector Association="TweetDataModel.LinkSite" >
+          <ConnectorPoint PointX="2.25" PointY="4.6439925130208328" />
+          <ConnectorPoint PointX="3" PointY="4.6439925130208328" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TweetDataModel.Medium" Width="1.5" PointX="0.75" PointY="0.75" Height="1.7879850260416657" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

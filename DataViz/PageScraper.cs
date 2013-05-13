@@ -6,10 +6,12 @@ using Newtonsoft.Json.Linq;
 
 namespace DataViz {
     public class PageScraper {
-        private string url { get; set; }
+        public string Url { get; set; }
         JObject diffBot;
+
+
         public PageScraper(string url) {
-            this.url = url;
+            this.Url = url;
             string diffBot_url = diffBot_base + url;
             var content = diffBot_url.GetContent();
             diffBot = JObject.Parse(content);

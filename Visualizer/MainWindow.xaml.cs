@@ -26,21 +26,17 @@ namespace Visualizer {
         }
         MediaFetcher fetcher = new MediaFetcher();
         HashSet<string> strings = new HashSet<string>();
-        //List<string> strings = new List<string>();
 
         void bw_DoWork(object sender, DoWorkEventArgs e) {
-            foreach(var s in fetcher.Fetch("data", "visualization")){
-                strings.Add(s);
-                Dispatcher.Invoke((Action)(() => {
-                    this.Images.ItemsSource = null;
-                    this.Images.ItemsSource = strings;
-                }));
-            }
+            var db = DataStore.DataUtil.GetDataContext();
+            var media = DataStore.Program.MediaElements(db);
+            var ordered = media.OrderByDescending(i => i.Value);
+            Dispatcher.Invoke((Action)(() => {
+                this.Images.ItemsSource = null;
+                this.Images.ItemsSource = ordered;
+            }));
         }
 
         BackgroundWorker bw = new BackgroundWorker();
-        
-
-
     }
 }

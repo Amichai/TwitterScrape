@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataViz", "DataViz\DataViz.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visualizer", "Visualizer\Visualizer.csproj", "{A840690F-DCFE-42CC-8AE6-AF27F5FF5DFB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStore", "DataStore\DataStore.csproj", "{C376BC4E-73AD-4D0B-8408-E4ED9B33222C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,6 +21,10 @@ Global
 		{A840690F-DCFE-42CC-8AE6-AF27F5FF5DFB}.Debug|x86.Build.0 = Debug|x86
 		{A840690F-DCFE-42CC-8AE6-AF27F5FF5DFB}.Release|x86.ActiveCfg = Release|x86
 		{A840690F-DCFE-42CC-8AE6-AF27F5FF5DFB}.Release|x86.Build.0 = Release|x86
+		{C376BC4E-73AD-4D0B-8408-E4ED9B33222C}.Debug|x86.ActiveCfg = Debug|x86
+		{C376BC4E-73AD-4D0B-8408-E4ED9B33222C}.Debug|x86.Build.0 = Debug|x86
+		{C376BC4E-73AD-4D0B-8408-E4ED9B33222C}.Release|x86.ActiveCfg = Release|x86
+		{C376BC4E-73AD-4D0B-8408-E4ED9B33222C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
