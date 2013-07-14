@@ -11,7 +11,9 @@ namespace DataViz {
     public static class Util {
         public static string ExpandUrl(this string tinyUrl) {
             string url_base = @"http://api.longurl.org/v2/expand?url=";
-            string url = url_base + tinyUrl;
+            //string url_base = @"http://untiny.me/api/1.0/extract/?url=";
+            string allRedirects = "&all-redirects=1";
+            string url = url_base + tinyUrl + allRedirects;
             var content = url.GetContent();
             var doc = new XmlDocument();
             doc.LoadXml(content);
@@ -38,6 +40,29 @@ namespace DataViz {
             // Release the response object resources.
             streamResponse.Close();
             return content;
+        }
+
+        public static string UnuiqeUrl(this string fullUrl) {
+            List<int> indices = new List<int>();
+            string token = "?utm";
+            if (fullUrl.Contains(token)) {
+                indices.Add(fullUrl.IndexOf(token));
+            }
+            token = "&feature";
+            if (fullUrl.Contains(token)) {
+                indices.Add(fullUrl.IndexOf(token));
+            }
+            string unique;
+            if (indices.Count() == 0) {
+                var before = fullUrl.Count();
+                var trimmed = fullUrl.TrimEnd('/');
+                unique = trimmed;
+            } else {
+                var index = indices.Min();
+                var uniqueUrl = string.Concat(fullUrl.Take(index));
+                unique = uniqueUrl;
+            }
+            return unique;
         }
     }
 }

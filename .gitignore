@@ -6,3 +6,9 @@ Visualizer/obj/
 Visualizer/bin
 DataStore/bin
 DataStore/obj/
+csvParser/bin/
+csvParser/obj/
+DB2/bin/
+DB2/obj/
+VisQuery/obj/
+VisQuery/bin

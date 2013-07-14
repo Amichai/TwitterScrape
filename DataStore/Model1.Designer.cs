@@ -74,22 +74,6 @@ namespace DataStore
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Website> Websites
-        {
-            get
-            {
-                if ((_Websites == null))
-                {
-                    _Websites = base.CreateObjectSet<Website>("Websites");
-                }
-                return _Websites;
-            }
-        }
-        private ObjectSet<Website> _Websites;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Tweet> Tweets
         {
             get
@@ -118,18 +102,42 @@ namespace DataStore
             }
         }
         private ObjectSet<Medium> _Media;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Tweet2> Tweet2
+        {
+            get
+            {
+                if ((_Tweet2 == null))
+                {
+                    _Tweet2 = base.CreateObjectSet<Tweet2>("Tweet2");
+                }
+                return _Tweet2;
+            }
+        }
+        private ObjectSet<Tweet2> _Tweet2;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Website> Websites
+        {
+            get
+            {
+                if ((_Websites == null))
+                {
+                    _Websites = base.CreateObjectSet<Website>("Websites");
+                }
+                return _Websites;
+            }
+        }
+        private ObjectSet<Website> _Websites;
 
         #endregion
 
         #region AddTo Methods
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Websites EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToWebsites(Website website)
-        {
-            base.AddObject("Websites", website);
-        }
     
         /// <summary>
         /// Deprecated Method for adding a new object to the Tweets EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
@@ -145,6 +153,22 @@ namespace DataStore
         public void AddToMedia(Medium medium)
         {
             base.AddObject("Media", medium);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Tweet2 EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTweet2(Tweet2 tweet2)
+        {
+            base.AddObject("Tweet2", tweet2);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Websites EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToWebsites(Website website)
+        {
+            base.AddObject("Websites", website);
         }
 
         #endregion
@@ -280,6 +304,54 @@ namespace DataStore
         private Nullable<global::System.Int32> _ImageArea;
         partial void OnImageAreaChanging(Nullable<global::System.Int32> value);
         partial void OnImageAreaChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Width
+        {
+            get
+            {
+                return _Width;
+            }
+            set
+            {
+                OnWidthChanging(value);
+                ReportPropertyChanging("Width");
+                _Width = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Width");
+                OnWidthChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Width;
+        partial void OnWidthChanging(Nullable<global::System.Int32> value);
+        partial void OnWidthChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Height
+        {
+            get
+            {
+                return _Height;
+            }
+            set
+            {
+                OnHeightChanging(value);
+                ReportPropertyChanging("Height");
+                _Height = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Height");
+                OnHeightChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Height;
+        partial void OnHeightChanging(Nullable<global::System.Int32> value);
+        partial void OnHeightChanged();
 
         #endregion
 
@@ -385,6 +457,54 @@ namespace DataStore
         private global::System.String _LinkSite;
         partial void OnLinkSiteChanging(global::System.String value);
         partial void OnLinkSiteChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> Date
+        {
+            get
+            {
+                return _Date;
+            }
+            set
+            {
+                OnDateChanging(value);
+                ReportPropertyChanging("Date");
+                _Date = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Date");
+                OnDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _Date;
+        partial void OnDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TwitterHandle
+        {
+            get
+            {
+                return _TwitterHandle;
+            }
+            set
+            {
+                OnTwitterHandleChanging(value);
+                ReportPropertyChanging("TwitterHandle");
+                _TwitterHandle = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TwitterHandle");
+                OnTwitterHandleChanged();
+            }
+        }
+        private global::System.String _TwitterHandle;
+        partial void OnTwitterHandleChanging(global::System.String value);
+        partial void OnTwitterHandleChanged();
 
         #endregion
 
@@ -431,6 +551,159 @@ namespace DataStore
 
         #endregion
 
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="TweetDataModel", Name="Tweet2")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Tweet2 : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Tweet2 object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        public static Tweet2 CreateTweet2(global::System.String id)
+        {
+            Tweet2 tweet2 = new Tweet2();
+            tweet2.ID = id;
+            return tweet2;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.String _ID;
+        partial void OnIDChanging(global::System.String value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Url
+        {
+            get
+            {
+                return _Url;
+            }
+            set
+            {
+                OnUrlChanging(value);
+                ReportPropertyChanging("Url");
+                _Url = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Url");
+                OnUrlChanged();
+            }
+        }
+        private global::System.String _Url;
+        partial void OnUrlChanging(global::System.String value);
+        partial void OnUrlChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Text
+        {
+            get
+            {
+                return _Text;
+            }
+            set
+            {
+                OnTextChanging(value);
+                ReportPropertyChanging("Text");
+                _Text = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Text");
+                OnTextChanged();
+            }
+        }
+        private global::System.String _Text;
+        partial void OnTextChanging(global::System.String value);
+        partial void OnTextChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Username
+        {
+            get
+            {
+                return _Username;
+            }
+            set
+            {
+                OnUsernameChanging(value);
+                ReportPropertyChanging("Username");
+                _Username = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Username");
+                OnUsernameChanged();
+            }
+        }
+        private global::System.String _Username;
+        partial void OnUsernameChanging(global::System.String value);
+        partial void OnUsernameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> Date
+        {
+            get
+            {
+                return _Date;
+            }
+            set
+            {
+                OnDateChanging(value);
+                ReportPropertyChanging("Date");
+                _Date = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Date");
+                OnDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _Date;
+        partial void OnDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnDateChanged();
+
+        #endregion
+
+    
     }
     
     /// <summary>
@@ -508,6 +781,54 @@ namespace DataStore
         private global::System.String _Url;
         partial void OnUrlChanging(global::System.String value);
         partial void OnUrlChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String UniqueUrl
+        {
+            get
+            {
+                return _UniqueUrl;
+            }
+            set
+            {
+                OnUniqueUrlChanging(value);
+                ReportPropertyChanging("UniqueUrl");
+                _UniqueUrl = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("UniqueUrl");
+                OnUniqueUrlChanged();
+            }
+        }
+        private global::System.String _UniqueUrl;
+        partial void OnUniqueUrlChanging(global::System.String value);
+        partial void OnUniqueUrlChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> HitCount
+        {
+            get
+            {
+                return _HitCount;
+            }
+            set
+            {
+                OnHitCountChanging(value);
+                ReportPropertyChanging("HitCount");
+                _HitCount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HitCount");
+                OnHitCountChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _HitCount;
+        partial void OnHitCountChanging(Nullable<global::System.Int32> value);
+        partial void OnHitCountChanged();
 
         #endregion
 

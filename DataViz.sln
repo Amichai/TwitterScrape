@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visualizer", "Visualizer\Vi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStore", "DataStore\DataStore.csproj", "{C376BC4E-73AD-4D0B-8408-E4ED9B33222C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csvParser", "csvParser\csvParser.csproj", "{89487F0C-FC80-4F1C-9B58-84A9EAE7136E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB2", "DB2\DB2.csproj", "{FC271001-6F28-40AF-8B57-091E7A9763E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -25,6 +29,14 @@ Global
 		{C376BC4E-73AD-4D0B-8408-E4ED9B33222C}.Debug|x86.Build.0 = Debug|x86
 		{C376BC4E-73AD-4D0B-8408-E4ED9B33222C}.Release|x86.ActiveCfg = Release|x86
 		{C376BC4E-73AD-4D0B-8408-E4ED9B33222C}.Release|x86.Build.0 = Release|x86
+		{89487F0C-FC80-4F1C-9B58-84A9EAE7136E}.Debug|x86.ActiveCfg = Debug|x86
+		{89487F0C-FC80-4F1C-9B58-84A9EAE7136E}.Debug|x86.Build.0 = Debug|x86
+		{89487F0C-FC80-4F1C-9B58-84A9EAE7136E}.Release|x86.ActiveCfg = Release|x86
+		{89487F0C-FC80-4F1C-9B58-84A9EAE7136E}.Release|x86.Build.0 = Release|x86
+		{FC271001-6F28-40AF-8B57-091E7A9763E3}.Debug|x86.ActiveCfg = Debug|x86
+		{FC271001-6F28-40AF-8B57-091E7A9763E3}.Debug|x86.Build.0 = Debug|x86
+		{FC271001-6F28-40AF-8B57-091E7A9763E3}.Release|x86.ActiveCfg = Release|x86
+		{FC271001-6F28-40AF-8B57-091E7A9763E3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

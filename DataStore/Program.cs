@@ -14,7 +14,7 @@ namespace DataStore {
             TweetDataEntities db;
             MediaFetcher fetcher = new MediaFetcher();
             db = DataUtil.GetDataContext();
-            getSites(db, "data", "visualization");
+            getSites(db, "data", "visualization", "-rt");
             //popularSites();
             //MediaElements(db);
             //addImageSizes(db);
