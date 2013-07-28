@@ -19,7 +19,7 @@ namespace csvParser {
             //parseTable();
             //imageSizes();
             //removeDuplicates();
-
+            
             var db = DB2.Program.GetDataContext();
             //var sorted = db.Websites.OrderByDescending(i => i.HitCount);
             //var searchitem = db.Websites.Where(i => i.Url.Contains("records"));

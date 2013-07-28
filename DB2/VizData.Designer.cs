@@ -19,8 +19,12 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
+[assembly: EdmRelationshipAttribute("VisualizationModel", "FK_TweetHashtag_1", "Hashtag", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DB2.Hashtag), "TweetHashtag", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DB2.TweetHashtag), true)]
 [assembly: EdmRelationshipAttribute("VisualizationModel", "FK_Media_0", "Website", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DB2.Website), "Medium", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DB2.Medium), true)]
+[assembly: EdmRelationshipAttribute("VisualizationModel", "FK_TweetHashtag_0", "Tweet", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DB2.Tweet), "TweetHashtag", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DB2.TweetHashtag), true)]
 [assembly: EdmRelationshipAttribute("VisualizationModel", "FK_Website_0", "Tweet", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DB2.Tweet), "Website", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DB2.Website), true)]
+[assembly: EdmRelationshipAttribute("VisualizationModel", "FK_TweetWebsite2_0", "Tweet", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DB2.Tweet), "TweetWebsite", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DB2.TweetWebsite), true)]
+[assembly: EdmRelationshipAttribute("VisualizationModel", "FK_TweetWebsite2_1", "Website", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DB2.Website), "TweetWebsite", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DB2.TweetWebsite), true)]
 
 #endregion
 
@@ -75,6 +79,22 @@ namespace DB2
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<Hashtag> Hashtags
+        {
+            get
+            {
+                if ((_Hashtags == null))
+                {
+                    _Hashtags = base.CreateObjectSet<Hashtag>("Hashtags");
+                }
+                return _Hashtags;
+            }
+        }
+        private ObjectSet<Hashtag> _Hashtags;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<Medium> Media
         {
             get
@@ -107,6 +127,22 @@ namespace DB2
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<TweetHashtag> TweetHashtags
+        {
+            get
+            {
+                if ((_TweetHashtags == null))
+                {
+                    _TweetHashtags = base.CreateObjectSet<TweetHashtag>("TweetHashtags");
+                }
+                return _TweetHashtags;
+            }
+        }
+        private ObjectSet<TweetHashtag> _TweetHashtags;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<Website> Websites
         {
             get
@@ -119,10 +155,34 @@ namespace DB2
             }
         }
         private ObjectSet<Website> _Websites;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<TweetWebsite> TweetWebsites
+        {
+            get
+            {
+                if ((_TweetWebsites == null))
+                {
+                    _TweetWebsites = base.CreateObjectSet<TweetWebsite>("TweetWebsites");
+                }
+                return _TweetWebsites;
+            }
+        }
+        private ObjectSet<TweetWebsite> _TweetWebsites;
 
         #endregion
 
         #region AddTo Methods
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Hashtags EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToHashtags(Hashtag hashtag)
+        {
+            base.AddObject("Hashtags", hashtag);
+        }
     
         /// <summary>
         /// Deprecated Method for adding a new object to the Media EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
@@ -141,11 +201,27 @@ namespace DB2
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the TweetHashtags EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTweetHashtags(TweetHashtag tweetHashtag)
+        {
+            base.AddObject("TweetHashtags", tweetHashtag);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the Websites EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToWebsites(Website website)
         {
             base.AddObject("Websites", website);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the TweetWebsites EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTweetWebsites(TweetWebsite tweetWebsite)
+        {
+            base.AddObject("TweetWebsites", tweetWebsite);
         }
 
         #endregion
@@ -155,6 +231,115 @@ namespace DB2
     #endregion
 
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="VisualizationModel", Name="Hashtag")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Hashtag : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Hashtag object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="tag">Initial value of the Tag property.</param>
+        public static Hashtag CreateHashtag(global::System.Int32 id, global::System.String tag)
+        {
+            Hashtag hashtag = new Hashtag();
+            hashtag.ID = id;
+            hashtag.Tag = tag;
+            return hashtag;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Tag
+        {
+            get
+            {
+                return _Tag;
+            }
+            set
+            {
+                OnTagChanging(value);
+                ReportPropertyChanging("Tag");
+                _Tag = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Tag");
+                OnTagChanged();
+            }
+        }
+        private global::System.String _Tag;
+        partial void OnTagChanging(global::System.String value);
+        partial void OnTagChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("VisualizationModel", "FK_TweetHashtag_1", "TweetHashtag")]
+        public EntityCollection<TweetHashtag> TweetHashtags
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TweetHashtag>("VisualizationModel.FK_TweetHashtag_1", "TweetHashtag");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TweetHashtag>("VisualizationModel.FK_TweetHashtag_1", "TweetHashtag", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -546,6 +731,28 @@ namespace DB2
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("VisualizationModel", "FK_TweetHashtag_0", "TweetHashtag")]
+        public EntityCollection<TweetHashtag> TweetHashtags
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TweetHashtag>("VisualizationModel.FK_TweetHashtag_0", "TweetHashtag");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TweetHashtag>("VisualizationModel.FK_TweetHashtag_0", "TweetHashtag", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("VisualizationModel", "FK_Website_0", "Website")]
         public EntityCollection<Website> Websites
         {
@@ -558,6 +765,406 @@ namespace DB2
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Website>("VisualizationModel.FK_Website_0", "Website", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("VisualizationModel", "FK_TweetWebsite2_0", "TweetWebsite")]
+        public EntityCollection<TweetWebsite> TweetWebsites
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TweetWebsite>("VisualizationModel.FK_TweetWebsite2_0", "TweetWebsite");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TweetWebsite>("VisualizationModel.FK_TweetWebsite2_0", "TweetWebsite", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="VisualizationModel", Name="TweetHashtag")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class TweetHashtag : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new TweetHashtag object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="tweetID">Initial value of the TweetID property.</param>
+        /// <param name="hashtagID">Initial value of the HashtagID property.</param>
+        public static TweetHashtag CreateTweetHashtag(global::System.Int32 id, global::System.Int32 tweetID, global::System.Int32 hashtagID)
+        {
+            TweetHashtag tweetHashtag = new TweetHashtag();
+            tweetHashtag.ID = id;
+            tweetHashtag.TweetID = tweetID;
+            tweetHashtag.HashtagID = hashtagID;
+            return tweetHashtag;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TweetID
+        {
+            get
+            {
+                return _TweetID;
+            }
+            set
+            {
+                OnTweetIDChanging(value);
+                ReportPropertyChanging("TweetID");
+                _TweetID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TweetID");
+                OnTweetIDChanged();
+            }
+        }
+        private global::System.Int32 _TweetID;
+        partial void OnTweetIDChanging(global::System.Int32 value);
+        partial void OnTweetIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 HashtagID
+        {
+            get
+            {
+                return _HashtagID;
+            }
+            set
+            {
+                OnHashtagIDChanging(value);
+                ReportPropertyChanging("HashtagID");
+                _HashtagID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HashtagID");
+                OnHashtagIDChanged();
+            }
+        }
+        private global::System.Int32 _HashtagID;
+        partial void OnHashtagIDChanging(global::System.Int32 value);
+        partial void OnHashtagIDChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("VisualizationModel", "FK_TweetHashtag_1", "Hashtag")]
+        public Hashtag Hashtag
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Hashtag>("VisualizationModel.FK_TweetHashtag_1", "Hashtag").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Hashtag>("VisualizationModel.FK_TweetHashtag_1", "Hashtag").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Hashtag> HashtagReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Hashtag>("VisualizationModel.FK_TweetHashtag_1", "Hashtag");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Hashtag>("VisualizationModel.FK_TweetHashtag_1", "Hashtag", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("VisualizationModel", "FK_TweetHashtag_0", "Tweet")]
+        public Tweet Tweet
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Tweet>("VisualizationModel.FK_TweetHashtag_0", "Tweet").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Tweet>("VisualizationModel.FK_TweetHashtag_0", "Tweet").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Tweet> TweetReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Tweet>("VisualizationModel.FK_TweetHashtag_0", "Tweet");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Tweet>("VisualizationModel.FK_TweetHashtag_0", "Tweet", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="VisualizationModel", Name="TweetWebsite")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class TweetWebsite : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new TweetWebsite object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="tweetID">Initial value of the TweetID property.</param>
+        /// <param name="websiteID">Initial value of the WebsiteID property.</param>
+        public static TweetWebsite CreateTweetWebsite(global::System.Int32 id, global::System.Int32 tweetID, global::System.Int32 websiteID)
+        {
+            TweetWebsite tweetWebsite = new TweetWebsite();
+            tweetWebsite.ID = id;
+            tweetWebsite.TweetID = tweetID;
+            tweetWebsite.WebsiteID = websiteID;
+            return tweetWebsite;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TweetID
+        {
+            get
+            {
+                return _TweetID;
+            }
+            set
+            {
+                OnTweetIDChanging(value);
+                ReportPropertyChanging("TweetID");
+                _TweetID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TweetID");
+                OnTweetIDChanged();
+            }
+        }
+        private global::System.Int32 _TweetID;
+        partial void OnTweetIDChanging(global::System.Int32 value);
+        partial void OnTweetIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 WebsiteID
+        {
+            get
+            {
+                return _WebsiteID;
+            }
+            set
+            {
+                OnWebsiteIDChanging(value);
+                ReportPropertyChanging("WebsiteID");
+                _WebsiteID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("WebsiteID");
+                OnWebsiteIDChanged();
+            }
+        }
+        private global::System.Int32 _WebsiteID;
+        partial void OnWebsiteIDChanging(global::System.Int32 value);
+        partial void OnWebsiteIDChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("VisualizationModel", "FK_TweetWebsite2_0", "Tweet")]
+        public Tweet Tweet
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Tweet>("VisualizationModel.FK_TweetWebsite2_0", "Tweet").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Tweet>("VisualizationModel.FK_TweetWebsite2_0", "Tweet").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Tweet> TweetReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Tweet>("VisualizationModel.FK_TweetWebsite2_0", "Tweet");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Tweet>("VisualizationModel.FK_TweetWebsite2_0", "Tweet", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("VisualizationModel", "FK_TweetWebsite2_1", "Website")]
+        public Website Website
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Website>("VisualizationModel.FK_TweetWebsite2_1", "Website").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Website>("VisualizationModel.FK_TweetWebsite2_1", "Website").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Website> WebsiteReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Website>("VisualizationModel.FK_TweetWebsite2_1", "Website");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Website>("VisualizationModel.FK_TweetWebsite2_1", "Website", value);
                 }
             }
         }
@@ -721,6 +1328,54 @@ namespace DB2
         private global::System.Int32 _TweetID;
         partial void OnTweetIDChanging(global::System.Int32 value);
         partial void OnTweetIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LongUrlTitle
+        {
+            get
+            {
+                return _LongUrlTitle;
+            }
+            set
+            {
+                OnLongUrlTitleChanging(value);
+                ReportPropertyChanging("LongUrlTitle");
+                _LongUrlTitle = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LongUrlTitle");
+                OnLongUrlTitleChanged();
+            }
+        }
+        private global::System.String _LongUrlTitle;
+        partial void OnLongUrlTitleChanging(global::System.String value);
+        partial void OnLongUrlTitleChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
 
         #endregion
 
@@ -783,6 +1438,28 @@ namespace DB2
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Tweet>("VisualizationModel.FK_Website_0", "Tweet", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("VisualizationModel", "FK_TweetWebsite2_1", "TweetWebsite")]
+        public EntityCollection<TweetWebsite> TweetWebsites
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TweetWebsite>("VisualizationModel.FK_TweetWebsite2_1", "TweetWebsite");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TweetWebsite>("VisualizationModel.FK_TweetWebsite2_1", "TweetWebsite", value);
                 }
             }
         }

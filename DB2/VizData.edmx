@@ -6,18 +6,44 @@
     <edmx:StorageModels>
     <Schema Namespace="VisualizationModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="VisualizationModelStoreContainer">
+          <EntitySet Name="Hashtag" EntityType="VisualizationModel.Store.Hashtag" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Media" EntityType="VisualizationModel.Store.Media" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Tweet" EntityType="VisualizationModel.Store.Tweet" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TweetHashtag" EntityType="VisualizationModel.Store.TweetHashtag" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TweetWebsite" EntityType="VisualizationModel.Store.TweetWebsite" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Website" EntityType="VisualizationModel.Store.Website" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Media_0" Association="VisualizationModel.Store.FK_Media_0">
             <End Role="Website" EntitySet="Website" />
             <End Role="Media" EntitySet="Media" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TweetHashtag_0" Association="VisualizationModel.Store.FK_TweetHashtag_0">
+            <End Role="Tweet" EntitySet="Tweet" />
+            <End Role="TweetHashtag" EntitySet="TweetHashtag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TweetHashtag_1" Association="VisualizationModel.Store.FK_TweetHashtag_1">
+            <End Role="Hashtag" EntitySet="Hashtag" />
+            <End Role="TweetHashtag" EntitySet="TweetHashtag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TweetWebsite2_0" Association="VisualizationModel.Store.FK_TweetWebsite2_0">
+            <End Role="Tweet" EntitySet="Tweet" />
+            <End Role="TweetWebsite" EntitySet="TweetWebsite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TweetWebsite2_1" Association="VisualizationModel.Store.FK_TweetWebsite2_1">
+            <End Role="Website" EntitySet="Website" />
+            <End Role="TweetWebsite" EntitySet="TweetWebsite" />
           </AssociationSet>
           <AssociationSet Name="FK_Website_0" Association="VisualizationModel.Store.FK_Website_0">
             <End Role="Tweet" EntitySet="Tweet" />
             <End Role="Website" EntitySet="Website" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Hashtag">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Tag" Type="nvarchar" Nullable="false" MaxLength="120" />
+        </EntityType>
         <EntityType Name="Media">
           <Key>
             <PropertyRef Name="ID" />
@@ -39,6 +65,22 @@
           <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="TweetText" Type="nvarchar" Nullable="false" MaxLength="200" />
         </EntityType>
+        <EntityType Name="TweetHashtag">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TweetID" Type="int" Nullable="false" />
+          <Property Name="HashtagID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TweetWebsite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TweetID" Type="int" Nullable="false" />
+          <Property Name="WebsiteID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Website">
           <Key>
             <PropertyRef Name="ID" />
@@ -48,6 +90,8 @@
           <Property Name="Url" Type="nvarchar" Nullable="false" MaxLength="600" />
           <Property Name="HitCount" Type="int" Nullable="false" />
           <Property Name="TweetID" Type="int" Nullable="false" />
+          <Property Name="LongUrlTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <Association Name="FK_Media_0">
           <End Role="Website" Type="VisualizationModel.Store.Website" Multiplicity="1">
@@ -60,6 +104,58 @@
             </Principal>
             <Dependent Role="Media">
               <PropertyRef Name="SourceSiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TweetHashtag_0">
+          <End Role="Tweet" Type="VisualizationModel.Store.Tweet" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TweetHashtag" Type="VisualizationModel.Store.TweetHashtag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tweet">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TweetHashtag">
+              <PropertyRef Name="TweetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TweetHashtag_1">
+          <End Role="Hashtag" Type="VisualizationModel.Store.Hashtag" Multiplicity="1" />
+          <End Role="TweetHashtag" Type="VisualizationModel.Store.TweetHashtag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hashtag">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TweetHashtag">
+              <PropertyRef Name="HashtagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TweetWebsite2_0">
+          <End Role="Tweet" Type="VisualizationModel.Store.Tweet" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TweetWebsite" Type="VisualizationModel.Store.TweetWebsite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tweet">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TweetWebsite">
+              <PropertyRef Name="TweetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TweetWebsite2_1">
+          <End Role="Website" Type="VisualizationModel.Store.Website" Multiplicity="1" />
+          <End Role="TweetWebsite" Type="VisualizationModel.Store.TweetWebsite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Website">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TweetWebsite">
+              <PropertyRef Name="WebsiteID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -82,18 +178,45 @@
     <edmx:ConceptualModels>
       <Schema Namespace="VisualizationModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="VisualizationEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Hashtags" EntityType="VisualizationModel.Hashtag" />
           <EntitySet Name="Media" EntityType="VisualizationModel.Medium" />
           <EntitySet Name="Tweets" EntityType="VisualizationModel.Tweet" />
+          <EntitySet Name="TweetHashtags" EntityType="VisualizationModel.TweetHashtag" />
           <EntitySet Name="Websites" EntityType="VisualizationModel.Website" />
+          <AssociationSet Name="FK_TweetHashtag_1" Association="VisualizationModel.FK_TweetHashtag_1">
+            <End Role="Hashtag" EntitySet="Hashtags" />
+            <End Role="TweetHashtag" EntitySet="TweetHashtags" />
+          </AssociationSet>
           <AssociationSet Name="FK_Media_0" Association="VisualizationModel.FK_Media_0">
             <End Role="Website" EntitySet="Websites" />
             <End Role="Medium" EntitySet="Media" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TweetHashtag_0" Association="VisualizationModel.FK_TweetHashtag_0">
+            <End Role="Tweet" EntitySet="Tweets" />
+            <End Role="TweetHashtag" EntitySet="TweetHashtags" />
           </AssociationSet>
           <AssociationSet Name="FK_Website_0" Association="VisualizationModel.FK_Website_0">
             <End Role="Tweet" EntitySet="Tweets" />
             <End Role="Website" EntitySet="Websites" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="TweetWebsites" EntityType="VisualizationModel.TweetWebsite" />
+          <AssociationSet Name="FK_TweetWebsite2_0" Association="VisualizationModel.FK_TweetWebsite2_0">
+            <End Role="Tweet" EntitySet="Tweets" />
+            <End Role="TweetWebsite" EntitySet="TweetWebsites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TweetWebsite2_1" Association="VisualizationModel.FK_TweetWebsite2_1">
+            <End Role="Website" EntitySet="Websites" />
+            <End Role="TweetWebsite" EntitySet="TweetWebsites" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Hashtag">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Tag" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TweetHashtags" Relationship="VisualizationModel.FK_TweetHashtag_1" FromRole="Hashtag" ToRole="TweetHashtag" />
+        </EntityType>
         <EntityType Name="Medium">
           <Key>
             <PropertyRef Name="ID" />
@@ -115,7 +238,19 @@
           <Property Type="DateTime" Name="Date" Nullable="false" />
           <Property Type="String" Name="Username" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="TweetText" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TweetHashtags" Relationship="VisualizationModel.FK_TweetHashtag_0" FromRole="Tweet" ToRole="TweetHashtag" />
           <NavigationProperty Name="Websites" Relationship="VisualizationModel.FK_Website_0" FromRole="Tweet" ToRole="Website" />
+          <NavigationProperty Name="TweetWebsites" Relationship="VisualizationModel.FK_TweetWebsite2_0" FromRole="Tweet" ToRole="TweetWebsite" />
+        </EntityType>
+        <EntityType Name="TweetHashtag">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="TweetID" Nullable="false" />
+          <Property Type="Int32" Name="HashtagID" Nullable="false" />
+          <NavigationProperty Name="Hashtag" Relationship="VisualizationModel.FK_TweetHashtag_1" FromRole="TweetHashtag" ToRole="Hashtag" />
+          <NavigationProperty Name="Tweet" Relationship="VisualizationModel.FK_TweetHashtag_0" FromRole="TweetHashtag" ToRole="Tweet" />
         </EntityType>
         <EntityType Name="Website">
           <Key>
@@ -126,9 +261,24 @@
           <Property Type="String" Name="Url" Nullable="false" MaxLength="600" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="HitCount" Nullable="false" />
           <Property Type="Int32" Name="TweetID" Nullable="false" />
+          <Property Type="String" Name="LongUrlTitle" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Media" Relationship="VisualizationModel.FK_Media_0" FromRole="Website" ToRole="Medium" />
           <NavigationProperty Name="Tweet" Relationship="VisualizationModel.FK_Website_0" FromRole="Website" ToRole="Tweet" />
+          <NavigationProperty Name="TweetWebsites" Relationship="VisualizationModel.FK_TweetWebsite2_1" FromRole="Website" ToRole="TweetWebsite" />
         </EntityType>
+        <Association Name="FK_TweetHashtag_1">
+          <End Type="VisualizationModel.Hashtag" Role="Hashtag" Multiplicity="1" />
+          <End Type="VisualizationModel.TweetHashtag" Role="TweetHashtag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hashtag">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TweetHashtag">
+              <PropertyRef Name="HashtagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Media_0">
           <End Type="VisualizationModel.Website" Role="Website" Multiplicity="1" />
           <End Type="VisualizationModel.Medium" Role="Medium" Multiplicity="*" />
@@ -138,6 +288,18 @@
             </Principal>
             <Dependent Role="Medium">
               <PropertyRef Name="SourceSiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TweetHashtag_0">
+          <End Type="VisualizationModel.Tweet" Role="Tweet" Multiplicity="1" />
+          <End Type="VisualizationModel.TweetHashtag" Role="TweetHashtag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tweet">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TweetHashtag">
+              <PropertyRef Name="TweetID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -153,12 +315,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TweetWebsite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="TweetID" Nullable="false" />
+          <Property Type="Int32" Name="WebsiteID" Nullable="false" />
+          <NavigationProperty Name="Tweet" Relationship="VisualizationModel.FK_TweetWebsite2_0" FromRole="TweetWebsite" ToRole="Tweet" />
+          <NavigationProperty Name="Website" Relationship="VisualizationModel.FK_TweetWebsite2_1" FromRole="TweetWebsite" ToRole="Website" />
+        </EntityType>
+        <Association Name="FK_TweetWebsite2_0">
+          <End Type="VisualizationModel.Tweet" Role="Tweet" Multiplicity="1" />
+          <End Type="VisualizationModel.TweetWebsite" Role="TweetWebsite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tweet">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TweetWebsite">
+              <PropertyRef Name="TweetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TweetWebsite2_1">
+          <End Type="VisualizationModel.Website" Role="Website" Multiplicity="1" />
+          <End Type="VisualizationModel.TweetWebsite" Role="TweetWebsite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Website">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TweetWebsite">
+              <PropertyRef Name="WebsiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="VisualizationModelStoreContainer" CdmEntityContainer="VisualizationEntities" >
+          <EntitySetMapping Name="Hashtags">
+            <EntityTypeMapping TypeName="VisualizationModel.Hashtag">
+              <MappingFragment StoreEntitySet="Hashtag">
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Media">
             <EntityTypeMapping TypeName="VisualizationModel.Medium">
               <MappingFragment StoreEntitySet="Media">
@@ -182,13 +386,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TweetHashtags">
+            <EntityTypeMapping TypeName="VisualizationModel.TweetHashtag">
+              <MappingFragment StoreEntitySet="TweetHashtag">
+                <ScalarProperty Name="HashtagID" ColumnName="HashtagID" />
+                <ScalarProperty Name="TweetID" ColumnName="TweetID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Websites">
             <EntityTypeMapping TypeName="VisualizationModel.Website">
               <MappingFragment StoreEntitySet="Website">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LongUrlTitle" ColumnName="LongUrlTitle" />
                 <ScalarProperty Name="TweetID" ColumnName="TweetID" />
                 <ScalarProperty Name="HitCount" ColumnName="HitCount" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TweetWebsites">
+            <EntityTypeMapping TypeName="VisualizationModel.TweetWebsite">
+              <MappingFragment StoreEntitySet="TweetWebsite">
+                <ScalarProperty Name="WebsiteID" ColumnName="WebsiteID" />
+                <ScalarProperty Name="TweetID" ColumnName="TweetID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -213,17 +437,40 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="VizData" >
-        <EntityTypeShape EntityType="VisualizationModel.Medium" Width="1.5" PointX="5.25" PointY="1" Height="2.3648893229166656" />
-        <EntityTypeShape EntityType="VisualizationModel.Tweet" Width="1.5" PointX="0.75" PointY="1" Height="2.1725878906249996" />
-        <EntityTypeShape EntityType="VisualizationModel.Website" Width="1.5" PointX="3" PointY="1" Height="2.3648893229166674" />
+      <Diagram Name="VizData" ZoomLevel="83" >
+        <EntityTypeShape EntityType="VisualizationModel.Hashtag" Width="1.5" PointX="0.75" PointY="1.625" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="VisualizationModel.Medium" Width="1.5" PointX="5.25" PointY="9.75" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="VisualizationModel.Tweet" Width="1.5" PointX="0.75" PointY="4.125" Height="2.5571907552083317" />
+        <EntityTypeShape EntityType="VisualizationModel.TweetHashtag" Width="1.5" PointX="3" PointY="4.5" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="VisualizationModel.Website" Width="1.5" PointX="3" PointY="9.375" Height="2.9417936197916674" />
+        <AssociationConnector Association="VisualizationModel.FK_TweetHashtag_1" >
+          <ConnectorPoint PointX="2.25" PointY="2.422841796875" />
+          <ConnectorPoint PointX="3.75" PointY="2.422841796875" />
+          <ConnectorPoint PointX="3.75" PointY="4.5" />
+        </AssociationConnector>
         <AssociationConnector Association="VisualizationModel.FK_Media_0" >
-          <ConnectorPoint PointX="4.5" PointY="2.1824446614583328" />
-          <ConnectorPoint PointX="5.25" PointY="2.1824446614583328" />
+          <ConnectorPoint PointX="4.5" PointY="10.932444661458334" />
+          <ConnectorPoint PointX="5.25" PointY="10.932444661458334" />
+        </AssociationConnector>
+        <AssociationConnector Association="VisualizationModel.FK_TweetHashtag_0" >
+          <ConnectorPoint PointX="2.25" PointY="5.4901432291666659" />
+          <ConnectorPoint PointX="3" PointY="5.4901432291666659" />
         </AssociationConnector>
         <AssociationConnector Association="VisualizationModel.FK_Website_0" >
-          <ConnectorPoint PointX="2.25" PointY="2.0862939453125" />
-          <ConnectorPoint PointX="3" PointY="2.0862939453125" />
+          <ConnectorPoint PointX="1.5" PointY="6.6821907552083326" />
+          <ConnectorPoint PointX="1.5" PointY="10.845896809895834" />
+          <ConnectorPoint PointX="3" PointY="10.845896809895834" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="VisualizationModel.TweetWebsite" Width="1.5" PointX="5.25" PointY="6.25" Height="1.9802864583333388" />
+        <AssociationConnector Association="VisualizationModel.FK_TweetWebsite2_0" >
+          <ConnectorPoint PointX="2.25" PointY="6.6124886067708317" />
+          <ConnectorPoint PointX="5.25" PointY="6.6124886067708317" />
+        </AssociationConnector>
+        <AssociationConnector Association="VisualizationModel.FK_TweetWebsite2_1" >
+          <ConnectorPoint PointX="4.5" PointY="9.3761528461538468" />
+          <ConnectorPoint PointX="4.875" PointY="9.0011528461538468" />
+          <ConnectorPoint PointX="4.875" PointY="7.4526395325520864" />
+          <ConnectorPoint PointX="5.25" PointY="7.4526395325520864" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>
